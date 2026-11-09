@@ -1,0 +1,46 @@
+name: Deploy EverShop to AWS EC2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Despliegue Automatizado en AWS EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Desplegar en EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            echo "🚀 Iniciando despliegue de EverShop en AWS EC2..."
+            
+            # 1. Crear carpeta o actualizar código
+            if [ ! -d "$HOME/cloud_ecomerce" ]; then
+              git clone https://github.com/The-Nasa/cloud_ecomerce.git $HOME/cloud_ecomerce
+            fi
+            
+            cd $HOME/cloud_ecomerce
+            git fetch origin main
+            git reset --hard origin/main
+            
+            # 2. Inyectar variables de entorno (.env)
+            echo "${{ secrets.ENV_FILE }}" > .env
+            
+            # 3. Descargar imágenes y levantar contenedores
+            docker compose pull
+            docker compose down --remove-orphans || true
+            docker compose up -d
+            
+            # 4. Verificar estado
+            echo "📊 Estado de los contenedores:"
+            docker compose ps
+            echo "✅ ¡Despliegue de EverShop completado con éxito en AWS EC2!"
