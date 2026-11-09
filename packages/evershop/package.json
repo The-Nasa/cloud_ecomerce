@@ -186,7 +186,7 @@
     "@graphql-tools/schema": "^9.0.19",
     "@hapi/topo": "^5.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.6.0",
-    "@stripe/react-stripe-js": "^3.10.0",
+    "@stripe/react-stripe-js": "^7.0.1",
     "@stripe/stripe-js": "^5.10.0",
     "@swc/cli": "^0.7.7",
     "@swc/core": "^1.11.29",
