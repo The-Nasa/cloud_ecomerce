@@ -258,7 +258,7 @@
     "session-file-store": "^1.5.0",
     "sharp": "^0.35.5",
     "slick-carousel": "^1.8.1",
-    "sonner": "^2.0.7",
+    "sonner": "^2.0.8",
     "stripe": "^21.0.1",
     "style-loader": "^3.3.1",
     "swc-minify-webpack-plugin": "^2.1.3",
